@@ -1,0 +1,41 @@
+initial commit - website and server setup
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+#
+# Initial commit
+#
+# Changes to be committed:
+#	new file:   .gitignore
+#	new file:   eslint.config.js
+#	new file:   index.html
+#	new file:   package-lock.json
+#	new file:   package.json
+#	new file:   public/vite.svg
+#	new file:   server/index.js
+#	new file:   server/package-lock.json
+#	new file:   server/package.json
+#	new file:   src/App.jsx
+#	new file:   src/assets/404-kangoroo-colored.svg
+#	new file:   src/assets/Coverletter_commercial.png
+#	new file:   src/assets/Dashboard_commercial.png
+#	new file:   src/assets/Resume_commercial.png
+#	new file:   src/assets/logo-noBG.png
+#	new file:   src/assets/react.svg
+#	new file:   src/components/AddJobModal.jsx
+#	new file:   src/components/Header.jsx
+#	new file:   src/components/ImageCarousel.jsx
+#	new file:   src/components/JobTable.jsx
+#	new file:   src/firebase.js
+#	new file:   src/index.css
+#	new file:   src/main.jsx
+#	new file:   src/pages/404Page.jsx
+#	new file:   src/pages/Cover.jsx
+#	new file:   src/pages/Dashboard.jsx
+#	new file:   src/pages/Login.jsx
+#	new file:   src/pages/Main.jsx
+#	new file:   src/pages/QnA.jsx
+#	new file:   src/pages/Resume.jsx
+#	new file:   vite.config.js
+#
