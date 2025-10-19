@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import dashboardImage from "../assets/Dashboard_commercial.png";
 import resumeImage from "../assets/Resume_commercial.png";
-import coverLetterImage from "../assets/CoverLetter_commercial.png";
+import coverLetterImage from "../assets/Coverletter_commercial.png";
 
 function ImageCarousel() {
     const settings = {
