@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { collection, query, where, onSnapshot, updateDoc, doc } from 'firebase/firestore';
 import { firestore } from '../firebase';
-import { IconButton } from '@mui/material';
+import { IconButton, useMediaQuery, useTheme } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteDoc } from 'firebase/firestore';
 
@@ -58,29 +58,135 @@ function JobTable({ user }) {
         }
     };
 
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
+
     const columns = [
-        { field: 'dataApplied', headerName: 'Date Applied', editable: false, flex: 1, headerAlign: 'center', },
-        { field: 'companyName', headerName: 'Company Name', editable: true, flex: 1, headerAlign: 'center' },
-        { field: 'companyDescription', headerName: 'Company Description', filterable: false, sortable: false, editable: true, flex: 1.5, headerAlign: 'center' },
-        { field: 'jobTitle', headerName: 'Job Title', editable: true, flex: 1, headerAlign: 'center' },
-        { field: 'location', headerName: 'Location', editable: true, flex: 1, headerAlign: 'center' },
-        { field: 'linkToPost', headerName: 'Link to Post', filterable: false, sortable: false, editable: true, flex: 1, headerAlign: 'center' },
-        { field: 'contactPerson', headerName: 'Contact Person', editable: true, flex: 1, headerAlign: 'center' },
-        { field: 'contactInformation', headerName: 'Contact Information', editable: true, flex: 1.5, headerAlign: 'center' },
-        { field: 'applicationStatus', headerName: 'Application Status', editable: true, flex: 1.5, headerAlign: 'center' },
-        { field: 'interviewDate', headerName: 'Interview Date', editable: true, flex: 1.5, headerAlign: 'center' },
-        { field: 'followUpDate', headerName: 'Follow-up Date', editable: true, flex: 1.5, headerAlign: 'center', },
-        { field: 'delete', headerName: 'Delete', flex: 1, filterable: false, editable: false, headerAlign: 'center', renderCell: (params) => 
-            (<IconButton
-                onClick={() => handleDeleteClick(params.row.id)}
-                color="error"
-                aria-label="delete">
-                <DeleteIcon />
-            </IconButton>)}
+        { 
+            field: 'dataApplied', 
+            headerName: 'Date', 
+            editable: false, 
+            flex: 1, 
+            minWidth: 100,
+            headerAlign: 'center',
+        },
+        { 
+            field: 'companyName', 
+            headerName: 'Company', 
+            editable: true, 
+            flex: 1, 
+            minWidth: 120,
+            headerAlign: 'center' 
+        },
+        { 
+            field: 'companyDescription', 
+            headerName: 'Description', 
+            filterable: false, 
+            sortable: false, 
+            editable: true, 
+            flex: 1.5, 
+            minWidth: 150,
+            headerAlign: 'center',
+            hide: isMobile
+        },
+        { 
+            field: 'jobTitle', 
+            headerName: 'Job Title', 
+            editable: true, 
+            flex: 1, 
+            minWidth: 120,
+            headerAlign: 'center' 
+        },
+        { 
+            field: 'location', 
+            headerName: 'Location', 
+            editable: true, 
+            flex: 1, 
+            minWidth: 100,
+            headerAlign: 'center',
+            hide: isMobile
+        },
+        { 
+            field: 'linkToPost', 
+            headerName: 'Link', 
+            filterable: false, 
+            sortable: false, 
+            editable: true, 
+            flex: 1, 
+            minWidth: 80,
+            headerAlign: 'center',
+            hide: isMobile || isTablet
+        },
+        { 
+            field: 'contactPerson', 
+            headerName: 'Contact', 
+            editable: true, 
+            flex: 1, 
+            minWidth: 100,
+            headerAlign: 'center',
+            hide: isMobile
+        },
+        { 
+            field: 'contactInformation', 
+            headerName: 'Contact Info', 
+            editable: true, 
+            flex: 1.5, 
+            minWidth: 120,
+            headerAlign: 'center',
+            hide: isMobile || isTablet
+        },
+        { 
+            field: 'applicationStatus', 
+            headerName: 'Status', 
+            editable: true, 
+            flex: 1.5, 
+            minWidth: 120,
+            headerAlign: 'center' 
+        },
+        { 
+            field: 'interviewDate', 
+            headerName: 'Interview', 
+            editable: true, 
+            flex: 1.5, 
+            minWidth: 110,
+            headerAlign: 'center',
+            hide: isMobile || isTablet
+        },
+        { 
+            field: 'followUpDate', 
+            headerName: 'Follow-up', 
+            editable: true, 
+            flex: 1.5, 
+            minWidth: 110,
+            headerAlign: 'center',
+            hide: isMobile || isTablet
+        },
+        { 
+            field: 'delete', 
+            headerName: 'Delete', 
+            flex: 0.5, 
+            minWidth: 80,
+            filterable: false, 
+            editable: false, 
+            headerAlign: 'center', 
+            renderCell: (params) => 
+                (<IconButton
+                    onClick={() => handleDeleteClick(params.row.id)}
+                    color="error"
+                    aria-label="delete">
+                    <DeleteIcon />
+                </IconButton>)
+        }
     ];
 
     return (
-        <div style={{ height: 700, width: '100%' }}>
+        <div style={{ 
+            height: isMobile ? 'calc(100vh - 200px)' : 700, 
+            width: '100%',
+            minHeight: isMobile ? '400px' : '500px',
+            overflowX: 'auto'
+        }}>
             <DataGrid
             rows={rows}
             columns={columns}
@@ -88,7 +194,8 @@ function JobTable({ user }) {
             processRowUpdate={handleProcessRowUpdate}
             experimentalFeatures={{ newEditingApi: true }}
             disableSelectionOnClick
-            autoWidth
+            autoPageSize={isMobile}
+            density={isMobile ? 'compact' : 'standard'}
             sx={{
                 backgroundColor: '#3c3c55',
                 color: '#e5e7eb',

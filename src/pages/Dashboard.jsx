@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, useMediaQuery, useTheme } from '@mui/material';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { addDoc, collection } from 'firebase/firestore';
 import JobTable from '../components/JobTable';
@@ -9,6 +9,8 @@ import { firestore, auth } from '../firebase';
 function Dashboard() {
   const [open, setOpen] = useState(false);
   const [user] = useAuthState(auth);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -28,19 +30,29 @@ function Dashboard() {
   return (
     <>
       {user ? (
-        <div style={{ padding: '20px', fontSize: '25px', color: 'white' }}>
-          <Box sx={{ display: 'flex', justifyContent: 'right' }}>              
+        <div style={{ 
+          padding: isMobile ? '10px' : '20px', 
+          fontSize: isMobile ? '18px' : '25px', 
+          color: 'white' 
+        }}>
+          <Box sx={{ 
+            display: 'flex', 
+            justifyContent: isMobile ? 'center' : 'right',
+            mb: isMobile ? 2 : 0
+          }}>              
             <Button
               variant="contained"
               sx={{
                 backgroundColor: '#3b82f6',
                 color: '#e5e7eb',
                 fontWeight: 'bold',
-                mb: 4,
+                mb: isMobile ? 2 : 4,
+                fontSize: isMobile ? '0.85rem' : '1rem',
+                padding: isMobile ? '6px 12px' : '8px 16px',
               }}
               onClick={handleOpen}
             >
-              + Add New Job
+              {isMobile ? '+ Add Job' : '+ Add New Job'}
             </Button>
           </Box>
 
@@ -53,8 +65,15 @@ function Dashboard() {
           />
         </div>
       ) : (
-        <div style={{ padding: '20px', fontSize: '25px', color: 'white' }}>
-          <h1 style={{ marginBottom: '2rem' }}>
+        <div style={{ 
+          padding: isMobile ? '10px' : '20px', 
+          fontSize: isMobile ? '18px' : '25px', 
+          color: 'white' 
+        }}>
+          <h1 style={{ 
+            marginBottom: '2rem',
+            fontSize: isMobile ? '1.5rem' : '2rem'
+          }}>
             Please log in to see your dashboard!
           </h1>
           <JobTable />
